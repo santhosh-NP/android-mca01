@@ -1,0 +1,56 @@
+package com.example.myapplication;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText nameEditText, regEditText;
+    Spinner deptSpinner;
+    Button submitButton;
+    TextView resultTextView;
+
+    String[] deptArray = {"CSE", "ECE", "IT", "MCA", "Civil"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Binding the views
+        nameEditText = findViewById(R.id.editTextName);
+        regEditText = findViewById(R.id.editTextReg);
+        deptSpinner = findViewById(R.id.spinnerDept);
+        submitButton = findViewById(R.id.buttonSubmit);
+        resultTextView = findViewById(R.id.textViewResult);
+
+        // Setting up the spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, deptArray);
+        deptSpinner.setAdapter(adapter);
+
+        // Setting up the button click listener
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nameEditText.getText().toString().trim();
+                String reg = regEditText.getText().toString().trim();
+                String dept = deptSpinner.getSelectedItem().toString();
+
+                if (name.isEmpty() || reg.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    String result = "Name: " + name + "\nRegistration No.: " + reg + "\nDepartment: " + dept;
+                    resultTextView.setText(result);
+                }
+            }
+        });
+    }
+}
+
